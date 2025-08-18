@@ -1,0 +1,71 @@
+@import "tailwindcss";
+@import "./normal.css";
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+
+  --color-primary: var(--primary);
+  --color-primary-accent: var(--primary-accent);
+
+  --color-secondary: var(--secondary);
+  --color-secondary-accent: var(--secondary-accent);
+
+  --color-card: var(--card);
+  --color-border: var(--border);
+  --color-ring: var(--ring);
+
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted-foreground: var(--muted-foreground);
+
+  --color-highlight: var(--highlight);
+  --color-highlight-foreground: var(--highlight-foreground);
+
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-error: var(--error);
+  --color-info: var(--info);
+}
+
+:root {
+  /* --background: #000000; */
+  /* --foreground: #ffffff; */
+  --background: #0b0d16;
+  --foreground: #ffffff;
+
+  /* --primary: #2b1cff; */
+  /* --primary-accent: #2518db; */
+  --primary: hsl(244, 100%, 55%);
+  --primary-accent: hsl(244, 100%, 51%);
+
+  /* --secondary: #0048ff; */
+  /* --secondary-accent: #3038f4; */
+  --secondary: hsl(223, 100%, 50%);
+  --secondary-accent: hsl(225, 100%, 46%);
+
+  --card: #111233;
+  --border: #1c2733;
+  --ring: oklch(0.708 0 0);
+
+  --primary-foreground: #ffffff;
+  --secondary-foreground: #b4b9c4;
+  --muted-foreground: #88909e;
+
+  --highlight: #4fff9c;
+  --highlight-foreground: #ff4fb2;
+
+  --success: #4fff9c;
+  --warning: #ffc857;
+  --error: #ff4f64;
+  --info: #3ec9e6;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}

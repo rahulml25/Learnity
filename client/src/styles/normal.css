@@ -1,0 +1,53 @@
+.home-radial-bg {
+  background-image: radial-gradient(
+    circle at 80% 80%,
+    rgba(45 31 237 / 0.2) 0%,
+    #000000 100%
+  );
+}
+
+.cta-sign-up {
+  --background-pos: 90deg;
+  background-image: linear-gradient(
+    var(--background-pos),
+    rgba(70, 28, 255, 1) 0%,
+    #4e8fff 100%
+  );
+
+  box-shadow:
+    0 0 20px #2c0779,
+    0 0 40px #0d1e95;
+
+  transition:
+    transform 0.3s ease-in-out,
+    box-shadow 0.3s ease-in-out;
+}
+
+.cta-sign-up:hover {
+  transform: scale(1.02);
+  animation: cta-sign-up-hover 0.2s forwards;
+}
+
+@keyframes cta-sign-up-hover {
+  0% {
+    --background-pos: 90deg;
+  }
+  30% {
+    --background-pos: 67.5deg;
+  }
+  55% {
+    --background-pos: 45deg;
+  }
+  60% {
+    --background-pos: 30deg;
+  }
+  70% {
+    --background-pos: 22.5deg;
+  }
+  90% {
+    --background-pos: 10deg;
+  }
+  100% {
+    --background-pos: 0deg;
+  }
+}

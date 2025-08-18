@@ -1,0 +1,16 @@
+{
+  "name": "learnity",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "concurrently \"npm --prefix client run dev\" \"npm --prefix server run dev\"",
+    "start": "concurrently \"npm --prefix client run start\" \"npm --prefix server run start\"",
+    "install": "concurrently \"cd client && bun install\" \"cd server && bun install\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "concurrently": "^9.2.0"
+  }
+}
