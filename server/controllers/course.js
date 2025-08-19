@@ -4,7 +4,9 @@ import User from "../models/User.js";
 /** @type {import('express').RequestHandler} */
 export const getCourses = async (req, res) => {
   try {
-    const courses = await Course.find().select("-enrolledStudents");
+    const courses = await Course.find()
+      .populate("instructor", "name email")
+      .select("-enrolledStudents");
     res.status(200).json(courses);
   } catch (error) {
     res.status(500).json({ message: "Internal server error." });
@@ -47,9 +49,9 @@ export const getCoursesByInstructor = async (req, res) => {
       });
     }
 
-    const courses = await Course.find({ instructor }).select(
-      "-enrolledStudents"
-    );
+    const courses = await Course.find({ instructor })
+      .populate("instructor", "name email")
+      .select("-enrolledStudents");
     res.status(200).json(courses);
   } catch (error) {
     res.status(500).json({ message: "Internal server error." });
@@ -68,7 +70,9 @@ export const getCoursesByStudent = async (req, res) => {
 
     const courses = await Course.find({
       enrolledStudents: { $in: [student] },
-    }).select("-enrolledStudents");
+    })
+      .populate("instructor", "name email")
+      .select("-enrolledStudents");
     res.status(200).json(courses);
   } catch (error) {
     res.status(500).json({ message: "Internal server error." });
@@ -79,16 +83,32 @@ export const getCoursesByStudent = async (req, res) => {
 export const getCourseById = async (req, res) => {
   try {
     const { id: courseId } = req.params;
+    const { id: userId } = req.user;
+
     if (!courseId) {
       return res.status(400).json({ message: "Course ID is required." });
     }
 
-    const course = await Course.findById(courseId).select("-enrolledStudents");
+    const course = await Course.findById(courseId).populate(
+      "instructor",
+      "name email"
+    );
+
     if (!course) {
       return res.status(404).json({ message: "Course not found." });
     }
 
-    res.status(200).json(course);
+    // Check if current user is enrolled
+    const isEnrolled = course.enrolledStudents.includes(userId);
+
+    // Return course data without enrolled students list, but include enrollment status
+    const courseData = {
+      ...course.toObject(),
+      isEnrolled,
+      enrolledStudents: undefined, // Remove the array but keep the enrollment status
+    };
+
+    res.status(200).json(courseData);
   } catch (error) {
     res.status(500).json({ message: "Internal server error." });
   }
@@ -184,6 +204,25 @@ export const enrollStudentInCourse = async (req, res) => {
     await course.save();
 
     res.status(200).json({ message: "Student enrolled successfully." });
+  } catch (error) {
+    res.status(500).json({ message: "Internal server error." });
+  }
+};
+
+/** @type {import('express').RequestHandler} */
+export const getCoursesByInstructorId = async (req, res) => {
+  try {
+    const { instructorId } = req.params;
+
+    if (!instructorId) {
+      return res.status(400).json({ message: "Instructor ID is required." });
+    }
+
+    const courses = await Course.find({ instructor: instructorId })
+      .populate("instructor", "name email")
+      .select("-enrolledStudents");
+
+    res.status(200).json(courses);
   } catch (error) {
     res.status(500).json({ message: "Internal server error." });
   }

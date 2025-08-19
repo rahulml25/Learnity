@@ -36,21 +36,23 @@ export default function ProfilePage() {
 
   const fetchProfile = async () => {
     try {
-      // In a real app, you'd have a dedicated profile endpoint
-      // For now, we'll simulate getting user data
       if (isOwnProfile) {
         setProfileUser(currentUser);
       } else {
-        // Simulate fetching another user's profile
-        setProfileUser({
-          _id: id,
-          name: "Sample User",
-          email: "sample@example.com",
-          role: "student",
-          goals: ["Learn web development", "Master React"],
-          skills: ["JavaScript", "CSS"],
-          location: "New York, NY",
-        });
+        // Fetch another user's profile from server
+        const response = await fetch(
+          `http://localhost:3000/auth/profile/${id}`,
+          {
+            credentials: "include",
+          },
+        );
+
+        if (response.ok) {
+          const userData = await response.json();
+          setProfileUser(userData);
+        } else {
+          setError("Failed to load profile or user not found");
+        }
       }
     } catch (error) {
       setError("Failed to load profile");
@@ -64,9 +66,12 @@ export default function ProfilePage() {
 
     try {
       console.log("Fetching instructor courses for:", profileUser);
-      const response = await fetch("http://localhost:3000/courses/created", {
-        credentials: "include",
-      });
+      const response = await fetch(
+        `http://localhost:3000/courses/instructor/${profileUser._id}`,
+        {
+          credentials: "include",
+        },
+      );
 
       if (response.ok) {
         const data = await response.json();

@@ -7,6 +7,7 @@ import {
   getCourseById,
   getCourses,
   getCoursesByInstructor,
+  getCoursesByInstructorId,
   getCoursesByStudent,
   updateCourseById,
 } from "../controllers/course.js";
@@ -18,6 +19,11 @@ router.post("/", authMiddleware, createCourse);
 
 router.get("/created", authMiddleware, getCoursesByInstructor);
 router.get("/enrolled", authMiddleware, getCoursesByStudent);
+router.get(
+  "/instructor/:instructorId",
+  authMiddleware,
+  getCoursesByInstructorId
+);
 
 router.get("/:id", authMiddleware, getCourseById);
 router.put("/:id", authMiddleware, updateCourseById);

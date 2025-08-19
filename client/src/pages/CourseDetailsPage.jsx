@@ -59,6 +59,8 @@ export default function CourseDetailsPage() {
       const data = await response.json();
       if (response.ok) {
         setEnrollmentStatus("success");
+        // Refresh course data to update enrollment status
+        fetchCourse();
       } else {
         setEnrollmentStatus(`error: ${data.message}`);
       }
@@ -131,7 +133,17 @@ export default function CourseDetailsPage() {
 
                   <div className="flex items-center space-x-2">
                     <User className="h-5 w-5" />
-                    <span>By {course.instructor?.name || "Instructor"}</span>
+                    <span>By </span>
+                    {course.instructor?._id ? (
+                      <Link
+                        to={`/profile/${course.instructor._id}`}
+                        className="text-primary hover:text-primary-accent underline transition-colors"
+                      >
+                        {course.instructor.name}
+                      </Link>
+                    ) : (
+                      <span>Instructor</span>
+                    )}
                   </div>
 
                   <div className="flex items-center space-x-2">
@@ -149,49 +161,131 @@ export default function CourseDetailsPage() {
 
               {/* Enrollment Section */}
               {user?.role === "student" && (
-                <div className="lg:w-80">
-                  <div className="bg-card border border-border rounded-lg p-6 shadow-sm">
-                    <h3 className="text-foreground mb-4 text-xl font-semibold">
-                      Enroll in this course
-                    </h3>
+                <div className="lg:w-80 lg:border-l lg:border-dashed lg:pl-6">
+                  {/* <div className="border-border from-card/50 to-muted/20 rounded-lg border bg-gradient-to-br p-6 backdrop-blur-sm"> */}
+                  <h3 className="text-foreground mb-4 text-xl font-semibold">
+                    Enrollment Status
+                  </h3>
 
-                    {enrollmentStatus && (
-                      <div
-                        className={`mb-4 rounded-lg p-4 text-sm font-medium ${
-                          enrollmentStatus === "success"
-                            ? "bg-gradient-to-r from-success/15 to-success/10 border border-success/30 text-success"
-                            : "bg-gradient-to-r from-error/15 to-error/10 border border-error/30 text-error"
-                        }`}
-                      >
-                        {enrollmentStatus === "success"
-                          ? "Successfully enrolled in course!"
-                          : enrollmentStatus.replace("error: ", "")}
+                  {course.isEnrolled ? (
+                    <div className="from-primary/10 to-secondary/10 mb-4 flex items-center space-x-3 rounded-lg bg-gradient-to-r p-4">
+                      <div className="from-primary/20 to-secondary/20 rounded-full bg-gradient-to-r p-2">
+                        <svg
+                          className="text-primary h-5 w-5"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M5 13l4 4L19 7"
+                          />
+                        </svg>
                       </div>
-                    )}
-
-                    <button
-                      onClick={handleEnroll}
-                      disabled={enrolling || enrollmentStatus === "success"}
-                      className="bg-primary hover:bg-primary-accent text-primary-foreground flex w-full items-center justify-center space-x-2 rounded-lg px-4 py-3 font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-50"
-                    >
-                      {enrolling ? (
-                        <>
-                          <Loader2 className="h-4 w-4 animate-spin" />
-                          <span>Enrolling...</span>
-                        </>
-                      ) : enrollmentStatus === "success" ? (
-                        <>
-                          <BookOpen className="h-4 w-4" />
-                          <span>Enrolled</span>
-                        </>
-                      ) : (
-                        <>
-                          <UserPlus className="h-4 w-4" />
-                          <span>Enroll Now</span>
-                        </>
+                      <div>
+                        <p className="text-foreground font-semibold">
+                          Already Enrolled
+                        </p>
+                        <p className="text-secondary-foreground text-sm">
+                          You have access to this course
+                        </p>
+                      </div>
+                    </div>
+                  ) : (
+                    <>
+                      {enrollmentStatus && (
+                        <div
+                          className={`mb-4 flex items-center space-x-3 rounded-lg p-4 ${
+                            enrollmentStatus === "success"
+                              ? "from-primary/10 to-secondary/10 bg-gradient-to-r"
+                              : "from-error/10 to-error/15 bg-gradient-to-r"
+                          }`}
+                        >
+                          <div
+                            className={`rounded-full p-2 ${
+                              enrollmentStatus === "success"
+                                ? "from-primary/20 to-secondary/20 bg-gradient-to-r"
+                                : "from-error/20 to-error/30 bg-gradient-to-r"
+                            }`}
+                          >
+                            {enrollmentStatus === "success" ? (
+                              <svg
+                                className="text-primary h-5 w-5"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M5 13l4 4L19 7"
+                                />
+                              </svg>
+                            ) : (
+                              <svg
+                                className="text-error h-5 w-5"
+                                fill="none"
+                                stroke="currentColor"
+                                viewBox="0 0 24 24"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M6 18L18 6M6 6l12 12"
+                                />
+                              </svg>
+                            )}
+                          </div>
+                          <div>
+                            <p
+                              className={`font-semibold ${
+                                enrollmentStatus === "success"
+                                  ? "text-foreground"
+                                  : "text-error"
+                              }`}
+                            >
+                              {enrollmentStatus === "success"
+                                ? "Successfully Enrolled!"
+                                : "Enrollment Failed"}
+                            </p>
+                            <p className="text-secondary-foreground text-sm">
+                              {enrollmentStatus === "success"
+                                ? "You now have access to this course"
+                                : enrollmentStatus.replace("error: ", "")}
+                            </p>
+                          </div>
+                        </div>
                       )}
-                    </button>
-                  </div>
+
+                      <button
+                        onClick={handleEnroll}
+                        disabled={enrolling || enrollmentStatus === "success"}
+                        className="bg-primary hover:bg-primary-accent text-primary-foreground flex w-full items-center justify-center space-x-2 rounded-lg px-4 py-3 font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-50"
+                      >
+                        {enrolling ? (
+                          <>
+                            <Loader2 className="h-4 w-4 animate-spin" />
+                            <span>Enrolling...</span>
+                          </>
+                        ) : enrollmentStatus === "success" ? (
+                          <>
+                            <BookOpen className="h-4 w-4" />
+                            <span>Enrolled</span>
+                          </>
+                        ) : (
+                          <>
+                            <UserPlus className="h-4 w-4" />
+                            <span>Enroll Now</span>
+                          </>
+                        )}
+                      </button>
+                    </>
+                  )}
+                  {/* </div> */}
                 </div>
               )}
             </div>
