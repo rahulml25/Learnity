@@ -1,23 +1,12 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router";
 import { useAuth } from "../contexts/AuthContext";
-import {
-  ArrowLeft,
-  Users,
-  Clock,
-  Calendar,
-  Loader2,
-  BookOpen,
-  User,
-  MapPin,
-  Mail,
-} from "lucide-react";
+import { ArrowLeft, Clock, Calendar, Loader2, BookOpen } from "lucide-react";
 
 export default function CoursePreviewPage() {
   const { id } = useParams();
   const { user } = useAuth();
   const [course, setCourse] = useState(null);
-  const [enrolledStudents, setEnrolledStudents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -38,33 +27,6 @@ export default function CoursePreviewPage() {
       if (courseResponse.ok) {
         const courseData = await courseResponse.json();
         setCourse(courseData);
-
-        // For demo purposes, simulate enrolled students data
-        // In a real app, you'd have an endpoint to get enrolled students
-        const mockStudents = [
-          {
-            _id: "1",
-            name: "Alice Johnson",
-            email: "alice@example.com",
-            location: "New York, NY",
-            enrolledAt: new Date().toISOString(),
-          },
-          {
-            _id: "2",
-            name: "Bob Smith",
-            email: "bob@example.com",
-            location: "Los Angeles, CA",
-            enrolledAt: new Date().toISOString(),
-          },
-          {
-            _id: "3",
-            name: "Carol Davis",
-            email: "carol@example.com",
-            location: "Chicago, IL",
-            enrolledAt: new Date().toISOString(),
-          },
-        ];
-        setEnrolledStudents(mockStudents);
       } else {
         setError("Course not found or access denied");
       }
@@ -151,11 +113,6 @@ export default function CoursePreviewPage() {
                   </div>
 
                   <div className="flex items-center space-x-2">
-                    <Users className="h-5 w-5" />
-                    <span>{enrolledStudents.length} enrolled students</span>
-                  </div>
-
-                  <div className="flex items-center space-x-2">
                     <Calendar className="h-5 w-5" />
                     <span>
                       Created {new Date(course.createdAt).toLocaleDateString()}
@@ -189,73 +146,6 @@ export default function CoursePreviewPage() {
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-
-          {/* Enrolled Students */}
-          <div className="bg-card border-border rounded-lg border p-8 shadow-sm">
-            <div className="mb-6 flex items-center justify-between">
-              <h2 className="text-foreground flex items-center space-x-2 text-2xl font-bold">
-                <Users className="h-6 w-6" />
-                <span>Enrolled Students ({enrolledStudents.length})</span>
-              </h2>
-            </div>
-
-            {enrolledStudents.length > 0 ? (
-              <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
-                {enrolledStudents.map((student) => (
-                  <StudentCard key={student._id} student={student} />
-                ))}
-              </div>
-            ) : (
-              <div className="py-12 text-center">
-                <Users className="text-muted-foreground mx-auto mb-4 h-16 w-16" />
-                <h3 className="text-foreground mb-2 text-xl font-semibold">
-                  No students enrolled yet
-                </h3>
-                <p className="text-muted-foreground">
-                  Share your course to start getting enrollments!
-                </p>
-              </div>
-            )}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function StudentCard({ student }) {
-  return (
-    <div className="bg-card border-border hover:border-primary/40 hover:bg-card/80 rounded-lg border p-6 backdrop-blur-sm transition-all duration-300 hover:shadow-lg">
-      <div className="flex items-start space-x-4">
-        <div className="from-secondary/20 to-secondary/10 ring-secondary/20 rounded-xl bg-gradient-to-br p-3 ring-1">
-          <User className="text-secondary h-6 w-6" />
-        </div>
-
-        <div className="min-w-0 flex-1">
-          <h3 className="text-foreground truncate text-lg font-semibold">
-            {student.name}
-          </h3>
-
-          <div className="mt-3 space-y-2">
-            <div className="text-secondary-foreground flex items-center space-x-2 text-sm">
-              <Mail className="text-primary h-3 w-3" />
-              <span className="truncate">{student.email}</span>
-            </div>
-
-            {student.location && (
-              <div className="text-secondary-foreground flex items-center space-x-2 text-sm">
-                <MapPin className="text-secondary h-3 w-3" />
-                <span>{student.location}</span>
-              </div>
-            )}
-
-            <div className="text-muted-foreground flex items-center space-x-2 text-sm">
-              <Calendar className="h-3 w-3" />
-              <span>
-                Enrolled {new Date(student.enrolledAt).toLocaleDateString()}
-              </span>
             </div>
           </div>
         </div>

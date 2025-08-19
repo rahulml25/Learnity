@@ -26,10 +26,13 @@ export default function ProfilePage() {
 
   useEffect(() => {
     fetchProfile();
+  }, [id]);
+
+  useEffect(() => {
     if (profileUser?.role === "instructor") {
       fetchInstructorCourses();
     }
-  }, [id]);
+  }, [profileUser]);
 
   const fetchProfile = async () => {
     try {
@@ -60,13 +63,17 @@ export default function ProfilePage() {
     if (profileUser?.role !== "instructor") return;
 
     try {
+      console.log("Fetching instructor courses for:", profileUser);
       const response = await fetch("http://localhost:3000/courses/created", {
         credentials: "include",
       });
 
       if (response.ok) {
         const data = await response.json();
+        console.log("Fetched courses:", data);
         setCourses(data);
+      } else {
+        console.error("Failed to fetch courses, status:", response.status);
       }
     } catch (error) {
       console.error("Failed to fetch instructor courses:", error);
@@ -160,9 +167,10 @@ export default function ProfilePage() {
                   {courses.length > 0 ? (
                     <div className="space-y-4">
                       {courses.slice(0, 3).map((course) => (
-                        <div
+                        <Link
                           key={course._id}
-                          className="border-primary/30 from-primary/10 to-secondary/10 hover:border-primary/50 rounded-lg border bg-gradient-to-r p-4 transition-all duration-300 hover:shadow-lg"
+                          to={`/courses/${course._id}`}
+                          className="border-primary/30 from-primary/10 to-secondary/10 hover:border-primary/50 block rounded-lg border bg-gradient-to-r p-4 transition-all duration-300 hover:shadow-lg"
                         >
                           <h4 className="text-foreground font-semibold">
                             {course.title}
@@ -170,7 +178,7 @@ export default function ProfilePage() {
                           <p className="text-secondary-foreground mt-1 text-sm">
                             {course.duration} hours
                           </p>
-                        </div>
+                        </Link>
                       ))}
                       {courses.length > 3 && (
                         <Link
