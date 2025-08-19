@@ -44,13 +44,13 @@
   --secondary: hsl(223, 100%, 50%);
   --secondary-accent: hsl(225, 100%, 46%);
 
-  --card: #111233;
-  --border: #1c2733;
+  --card: #1a1d29;
+  --border: #2a2f3a;
   --ring: oklch(0.708 0 0);
 
   --primary-foreground: #ffffff;
-  --secondary-foreground: #b4b9c4;
-  --muted-foreground: #88909e;
+  --secondary-foreground: #e2e8f0;
+  --muted-foreground: #94a3b8;
 
   --highlight: #4fff9c;
   --highlight-foreground: #ff4fb2;
@@ -67,5 +67,14 @@
   }
   body {
     @apply bg-background text-foreground;
+  }
+}
+
+@layer utilities {
+  .line-clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 }

@@ -3,7 +3,7 @@ import { Link } from "react-router";
 
 export default function HomePage() {
   return (
-    <div className="home-radial-bg grow">
+    <div className="home-radial-bg min-h-dvh">
       {/* Navbar */}
       <header className="container mx-auto flex items-center justify-between px-6 py-4">
         <div className="flex items-center space-x-2">
@@ -48,7 +48,7 @@ export default function HomePage() {
                 </button>
               </Link>
               <Link to="/courses">
-                <button className="border-primary hover:border-primary-accent rounded-full border-2 px-8 py-1.5 font-medium shadow transition-all duration-300 hover:scale-102 hover:bg-white/1 lg:px-10 lg:py-2 lg:text-lg">
+                <button className="border-primary hover:border-primary-accent hover:bg-primary/5 rounded-full border-2 px-8 py-1.5 font-medium shadow transition-all duration-300 hover:scale-102 lg:px-10 lg:py-2 lg:text-lg">
                   Browse Courses
                 </button>
               </Link>
