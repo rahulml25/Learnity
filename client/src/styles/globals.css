@@ -29,36 +29,37 @@
 }
 
 :root {
-  /* --background: #000000; */
-  /* --foreground: #ffffff; */
-  --background: #0b0d16;
-  --foreground: #ffffff;
+  /* Enhanced dark theme with better contrast and visual appeal */
+  --background: #0f1117;
+  --foreground: #f8fafc;
 
-  /* --primary: #2b1cff; */
-  /* --primary-accent: #2518db; */
-  --primary: hsl(244, 100%, 55%);
-  --primary-accent: hsl(244, 100%, 51%);
+  /* More refined primary colors - softer blue with better saturation */
+  --primary: hsl(229, 84%, 62%);
+  --primary-accent: hsl(229, 84%, 56%);
 
-  /* --secondary: #0048ff; */
-  /* --secondary-accent: #3038f4; */
-  --secondary: hsl(223, 100%, 50%);
-  --secondary-accent: hsl(225, 100%, 46%);
+  /* Better secondary colors - complementary purple-blue */
+  --secondary: hsl(250, 80%, 65%);
+  --secondary-accent: hsl(250, 80%, 58%);
 
-  --card: #1a1d29;
-  --border: #2a2f3a;
-  --ring: oklch(0.708 0 0);
+  /* Improved card and border colors for better hierarchy */
+  --card: #1e293b;
+  --border: #334155;
+  --ring: hsl(229, 84%, 62%);
 
+  /* Better text contrast hierarchy */
   --primary-foreground: #ffffff;
-  --secondary-foreground: #e2e8f0;
-  --muted-foreground: #94a3b8;
+  --secondary-foreground: #cbd5e1;
+  --muted-foreground: #64748b;
 
-  --highlight: #4fff9c;
-  --highlight-foreground: #ff4fb2;
+  /* More sophisticated accent colors */
+  --highlight: #10b981;
+  --highlight-foreground: #ec4899;
 
-  --success: #4fff9c;
-  --warning: #ffc857;
-  --error: #ff4f64;
-  --info: #3ec9e6;
+  /* Refined status colors */
+  --success: #10b981;
+  --warning: #f59e0b;
+  --error: #ef4444;
+  --info: #3b82f6;
 }
 
 @layer base {
