@@ -23,10 +23,10 @@ export default function RoleSelector({ onRoleSelect, type }) {
         <div className="space-y-4">
           <button
             onClick={() => onRoleSelect("student")}
-            className="border-border hover:border-primary bg-card hover:bg-card/90 group flex w-full items-center justify-center rounded-xl border p-6 backdrop-blur-sm transition-all duration-300 hover:shadow-xl"
+            className="group border-primary/30 from-card via-card to-primary/10 hover:border-primary/60 hover:shadow-primary/20 flex w-full items-center justify-center rounded-xl border bg-gradient-to-br p-6 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl"
           >
             <div className="flex items-center space-x-4">
-              <div className="from-secondary/20 to-secondary/10 group-hover:from-secondary/30 group-hover:to-secondary/20 rounded-xl bg-gradient-to-br p-4 transition-all duration-300 group-hover:shadow-lg">
+              <div className="from-secondary/30 to-highlight-foreground/30 group-hover:from-secondary/40 group-hover:to-highlight-foreground/40 rounded-xl bg-gradient-to-br p-4 transition-all duration-300 group-hover:shadow-lg">
                 <User className="text-secondary h-7 w-7" />
               </div>
               <div className="text-left">
@@ -42,10 +42,10 @@ export default function RoleSelector({ onRoleSelect, type }) {
 
           <button
             onClick={() => onRoleSelect("instructor")}
-            className="border-border hover:border-primary bg-card hover:bg-card/90 group flex w-full items-center justify-center rounded-xl border p-6 backdrop-blur-sm transition-all duration-300 hover:shadow-xl"
+            className="group border-primary/30 from-card via-card to-secondary/10 hover:border-secondary/60 hover:shadow-secondary/20 flex w-full items-center justify-center rounded-xl border bg-gradient-to-br p-6 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl"
           >
             <div className="flex items-center space-x-4">
-              <div className="from-primary/20 to-primary/10 group-hover:from-primary/30 group-hover:to-primary/20 rounded-xl bg-gradient-to-br p-4 transition-all duration-300 group-hover:shadow-lg">
+              <div className="from-primary/30 to-highlight/30 group-hover:from-primary/40 group-hover:to-highlight/40 rounded-xl bg-gradient-to-br p-4 transition-all duration-300 group-hover:shadow-lg">
                 <GraduationCap className="text-primary h-7 w-7" />
               </div>
               <div className="text-left">

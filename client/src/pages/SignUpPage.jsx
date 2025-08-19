@@ -103,7 +103,7 @@ export default function SignUpPage() {
                 required
                 value={formData.name}
                 onChange={handleInputChange}
-                className="border-border bg-card text-foreground placeholder-secondary-foreground focus:ring-primary focus:border-primary/50 hover:border-border/80 w-full rounded-lg border px-4 py-3 shadow-sm transition-all duration-200 focus:ring-2 focus:outline-none"
+                className="border-primary/30 from-card to-card/90 text-foreground placeholder:text-secondary-foreground hover:border-primary/50 focus:border-primary focus:ring-primary/30 w-full rounded-xl border bg-gradient-to-br px-4 py-3 shadow-lg backdrop-blur-sm transition-all duration-200 focus:ring-2 focus:outline-none"
                 placeholder="Enter your full name"
               />
             </div>
@@ -163,7 +163,7 @@ export default function SignUpPage() {
           <button
             type="submit"
             disabled={loading}
-            className="bg-primary hover:bg-primary-accent text-primary-foreground w-full rounded-lg px-4 py-2 font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-50"
+            className="from-primary via-primary to-secondary hover:from-primary-accent hover:via-primary-accent hover:to-secondary-accent hover:shadow-primary/30 focus:ring-primary/50 w-full rounded-xl bg-gradient-to-br px-6 py-3 font-semibold text-white transition-all duration-300 hover:shadow-lg focus:ring-2 focus:outline-none disabled:cursor-not-allowed disabled:opacity-50"
           >
             {loading ? "Creating Account..." : "Sign Up"}
           </button>

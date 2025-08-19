@@ -4,39 +4,41 @@ import { Link } from "react-router";
 export default function CourseCard({ course }) {
   return (
     <Link to={`/courses/${course._id}`}>
-      <div className="bg-card border-border hover:border-primary/60 hover:bg-card/80 group cursor-pointer rounded-lg border p-6 backdrop-blur-sm transition-all duration-300 hover:shadow-xl">
+      <div className="group border-primary/20 from-card via-card to-primary/5 hover:border-primary/60 hover:shadow-primary/20 cursor-pointer rounded-xl border bg-gradient-to-br p-6 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl">
         <div className="space-y-4">
           <div>
             <h3 className="text-foreground group-hover:text-primary text-xl leading-tight font-semibold transition-colors">
               {course.title}
             </h3>
-            <p className="text-secondary-foreground mt-3 line-clamp-3 text-sm leading-relaxed">
+            <p className="text-secondary-foreground/80 mt-3 line-clamp-3 text-sm leading-relaxed">
               {course.description}
             </p>
           </div>
 
-          <div className="text-muted-foreground border-border flex items-center justify-between border-t pt-4 text-sm">
+          <div className="border-primary/10 text-muted-foreground flex items-center justify-between border-t pt-4 text-sm">
             <div className="flex items-center space-x-2">
-              <div className="bg-primary/10 rounded p-1">
-                <Clock className="text-primary h-3 w-3" />
+              <div className="from-primary/20 to-highlight/20 rounded-lg bg-gradient-to-r p-2">
+                <Clock className="text-primary h-4 w-4" />
               </div>
-              <span className="font-medium">{course.duration} hours</span>
+              <span className="text-foreground font-medium">
+                {course.duration} hours
+              </span>
             </div>
 
             <div className="flex items-center space-x-2">
-              <div className="bg-secondary/10 rounded p-1">
-                <User className="text-secondary h-3 w-3" />
+              <div className="from-secondary/20 to-highlight-foreground/20 rounded-lg bg-gradient-to-r p-2">
+                <User className="text-secondary h-4 w-4" />
               </div>
-              <span className="font-medium">
+              <span className="text-foreground font-medium">
                 {course.instructor?.name || "Instructor"}
               </span>
             </div>
-          </div>
 
-          <div className="pt-2">
-            <button className="from-primary/15 to-primary/10 hover:from-primary/25 hover:to-primary/15 text-primary border-primary/20 hover:border-primary/40 w-full rounded-lg border bg-gradient-to-r px-4 py-3 font-semibold transition-all duration-300 hover:shadow-lg">
-              View Details
-            </button>
+            <div className="pt-2">
+              <button className="from-primary via-primary to-secondary hover:from-primary-accent hover:via-primary-accent hover:to-secondary-accent hover:shadow-primary/30 focus:ring-primary/50 w-full rounded-xl bg-gradient-to-br px-6 py-3 font-semibold text-white transition-all duration-300 hover:shadow-lg focus:ring-2 focus:outline-none">
+                View Details
+              </button>
+            </div>
           </div>
         </div>
       </div>

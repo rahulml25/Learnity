@@ -105,10 +105,10 @@ export default function ProfilePage() {
       <div className="container mx-auto px-4 py-8">
         <div className="mx-auto max-w-4xl">
           {/* Profile Header */}
-          <div className="bg-card border-border mb-8 rounded-lg border p-8 shadow-sm">
+          <div className="border-primary/20 from-card via-card to-primary/5 shadow-primary/10 mb-8 rounded-xl border bg-gradient-to-br p-8 shadow-xl">
             <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
               <div className="flex items-center space-x-4">
-                <div className="bg-primary/20 rounded-full p-4">
+                <div className="from-primary/30 to-secondary/30 rounded-full bg-gradient-to-br p-4">
                   <User className="text-primary h-8 w-8" />
                 </div>
                 <div>
@@ -153,7 +153,7 @@ export default function ProfilePage() {
             {/* Right Column - Additional Info */}
             <div className="space-y-6">
               {profileUser.role === "instructor" && (
-                <div className="bg-card border-border rounded-lg border p-6 shadow-sm">
+                <div className="border-primary/20 from-card via-card to-secondary/10 shadow-secondary/10 rounded-xl border bg-gradient-to-br p-6 shadow-lg">
                   <h3 className="text-foreground mb-4 text-xl font-semibold">
                     Created Courses
                   </h3>
@@ -162,7 +162,7 @@ export default function ProfilePage() {
                       {courses.slice(0, 3).map((course) => (
                         <div
                           key={course._id}
-                          className="from-primary/5 to-secondary/5 border-border hover:border-primary/30 rounded-lg border bg-gradient-to-r p-4 transition-all duration-300"
+                          className="border-primary/30 from-primary/10 to-secondary/10 hover:border-primary/50 rounded-lg border bg-gradient-to-r p-4 transition-all duration-300 hover:shadow-lg"
                         >
                           <h4 className="text-foreground font-semibold">
                             {course.title}

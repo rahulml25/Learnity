@@ -29,35 +29,35 @@
 }
 
 :root {
-  /* Enhanced dark theme with better contrast and visual appeal */
-  --background: #0f1117;
-  --foreground: #f8fafc;
+  /* Cool dark theme with vibrant, attractive colors */
+  --background: #0a0e1a;
+  --foreground: #f1f5f9;
 
-  /* More refined primary colors - softer blue with better saturation */
-  --primary: hsl(229, 84%, 62%);
-  --primary-accent: hsl(229, 84%, 56%);
+  /* Vibrant cyan-blue primary colors - much more attractive */
+  --primary: hsl(194, 95%, 58%);
+  --primary-accent: hsl(194, 95%, 52%);
 
-  /* Better secondary colors - complementary purple-blue */
-  --secondary: hsl(250, 80%, 65%);
-  --secondary-accent: hsl(250, 80%, 58%);
+  /* Cool purple secondary colors - perfect complement */
+  --secondary: hsl(280, 85%, 68%);
+  --secondary-accent: hsl(280, 85%, 62%);
 
-  /* Improved card and border colors for better hierarchy */
-  --card: #1e293b;
-  --border: #334155;
-  --ring: hsl(229, 84%, 62%);
+  /* Attractive card colors - cool dark blue with subtle warmth */
+  --card: #1a2332;
+  --border: hsl(194, 45%, 35%);
+  --ring: hsl(194, 95%, 58%);
 
-  /* Better text contrast hierarchy */
+  /* Crisp text contrast for readability */
   --primary-foreground: #ffffff;
-  --secondary-foreground: #cbd5e1;
-  --muted-foreground: #64748b;
+  --secondary-foreground: #e2e8f0;
+  --muted-foreground: #94a3b8;
 
-  /* More sophisticated accent colors */
-  --highlight: #10b981;
-  --highlight-foreground: #ec4899;
+  /* Eye-catching accent colors */
+  --highlight: hsl(166, 90%, 55%);
+  --highlight-foreground: hsl(320, 85%, 65%);
 
-  /* Refined status colors */
-  --success: #10b981;
-  --warning: #f59e0b;
+  /* Vibrant status colors */
+  --success: hsl(142, 85%, 55%);
+  --warning: hsl(38, 92%, 58%);
   --error: #ef4444;
   --info: #3b82f6;
 }
