@@ -13,6 +13,8 @@ import ProfilePage from "./pages/ProfilePage";
 import EnrolledCoursesPage from "./pages/EnrolledCoursesPage";
 import CreatedCoursesPage from "./pages/CreatedCoursesPage";
 import CoursePreviewPage from "./pages/CoursePreviewPage";
+import CreateCoursePage from "./pages/CreateCoursePage";
+import EditCoursePage from "./pages/EditCoursePage";
 
 export default function App() {
   return (
@@ -72,6 +74,22 @@ export default function App() {
                 element={
                   <ProtectedRoute>
                     <CreatedCoursesPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/courses/create"
+                element={
+                  <ProtectedRoute>
+                    <CreateCoursePage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/courses/:id/edit"
+                element={
+                  <ProtectedRoute>
+                    <EditCoursePage />
                   </ProtectedRoute>
                 }
               />

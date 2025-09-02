@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import Course from "../models/Course.js";
 import User from "../models/User.js";
 
@@ -23,14 +24,20 @@ export const createCourse = async (req, res) => {
         .json({ message: "Forbidden: Only instructors can create courses." });
     }
 
-    const { title, description, duration } = req.body;
+    const { title, description, overview, duration } = req.body;
     if (!title || !description || !duration) {
       return res
         .status(400)
         .json({ message: "Title, description, and duration are required." });
     }
 
-    const course = new Course({ title, description, duration, instructor });
+    const course = new Course({
+      title,
+      description,
+      overview: overview || "",
+      duration,
+      instructor,
+    });
     await course.save();
 
     res.status(201).json(course);
@@ -43,15 +50,44 @@ export const createCourse = async (req, res) => {
 export const getCoursesByInstructor = async (req, res) => {
   try {
     const { role, id: instructor } = req.user;
+
     if (role !== "instructor") {
       return res.status(403).json({
         message: "Forbidden: Only instructors can view their courses.",
       });
     }
 
-    const courses = await Course.find({ instructor })
-      .populate("instructor", "name email")
-      .select("-enrolledStudents");
+    let courses = await Course.aggregate([
+      { $match: { instructor: new mongoose.Types.ObjectId(instructor) } },
+      {
+        $addFields: {
+          enrolledStudentsCount: { $size: "$enrolledStudents" },
+        },
+      },
+      {
+        $project: {
+          title: 1,
+          description: 1,
+          overview: 1,
+          duration: 1,
+          instructor: 1,
+          enrolledStudentsCount: 1,
+          createdAt: 1,
+          updatedAt: 1,
+        },
+      },
+    ]);
+
+    // Step 2: populate instructor (name + email)
+    courses = await Course.populate(courses, {
+      path: "instructor",
+      select: "name email",
+    }).then((courses) =>
+      courses.map(({ enrolledStudentsCount, ...course }) => ({
+        ...course,
+        enrolledStudents: { length: enrolledStudentsCount },
+      }))
+    );
     res.status(200).json(courses);
   } catch (error) {
     res.status(500).json({ message: "Internal server error." });
@@ -129,7 +165,7 @@ export const updateCourseById = async (req, res) => {
       return res.status(400).json({ message: "Course ID is required." });
     }
 
-    const { title, description, duration } = req.body;
+    const { title, description, overview, duration } = req.body;
     if (!title || !description || !duration) {
       return res
         .status(400)
@@ -138,7 +174,7 @@ export const updateCourseById = async (req, res) => {
 
     const course = await Course.findByIdAndUpdate(
       courseId,
-      { title, description, duration },
+      { title, description, overview: overview || "", duration },
       { new: true }
     ).select("-enrolledStudents");
     if (!course) {

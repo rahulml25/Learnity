@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router";
 import { useAuth } from "../contexts/AuthContext";
+import MarkdownPreview from "@uiw/react-markdown-preview";
+import "@uiw/react-markdown-preview/markdown.css";
 import { ArrowLeft, Clock, Calendar, Loader2, BookOpen } from "lucide-react";
 
 export default function CoursePreviewPage() {
@@ -140,12 +142,42 @@ export default function CoursePreviewPage() {
                       View Public Course Page
                     </Link>
 
-                    <button className="bg-primary/10 hover:bg-primary/20 text-primary w-full rounded-lg px-4 py-2 font-medium transition-colors">
+                    <Link
+                      to={`/courses/${course._id}/edit`}
+                      className="bg-primary/10 hover:bg-primary/20 text-primary block w-full rounded-lg px-4 py-2 text-center font-medium transition-colors"
+                    >
                       Edit Course Details
-                    </button>
+                    </Link>
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+
+          {/* Course Overview */}
+          <div className="bg-card border-border rounded-lg border p-8 shadow-sm">
+            <h2 className="text-foreground mb-6 text-2xl font-bold">
+              Course Overview
+            </h2>
+
+            <div
+              className="prose prose-invert max-w-none"
+              data-color-mode="dark"
+            >
+              {course.overview ? (
+                <MarkdownPreview
+                  source={course.overview}
+                  style={{
+                    backgroundColor: "transparent",
+                    color: "var(--secondary-foreground)",
+                  }}
+                />
+              ) : (
+                <p className="text-secondary-foreground leading-relaxed">
+                  No detailed overview available for this course yet. You can
+                  add one by editing the course details.
+                </p>
+              )}
             </div>
           </div>
         </div>

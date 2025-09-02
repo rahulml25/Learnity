@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router";
 import { useAuth } from "../contexts/AuthContext";
+import MarkdownPreview from "@uiw/react-markdown-preview";
+import "@uiw/react-markdown-preview/markdown.css";
 import {
   Clock,
   User,
@@ -297,25 +299,23 @@ export default function CourseDetailsPage() {
               Course Overview
             </h2>
 
-            <div className="prose prose-invert max-w-none">
-              <p className="text-secondary-foreground leading-relaxed">
-                This comprehensive course covers all the essential topics you
-                need to master. Through practical exercises and real-world
-                examples, you'll gain the skills and knowledge to excel in this
-                subject area.
-              </p>
-
-              <h3 className="text-foreground mt-8 mb-4 text-xl font-semibold">
-                What You'll Learn
-              </h3>
-
-              <ul className="text-secondary-foreground space-y-2">
-                <li>• Fundamental concepts and principles</li>
-                <li>• Hands-on practical applications</li>
-                <li>• Industry best practices and standards</li>
-                <li>• Real-world project development</li>
-                <li>• Advanced techniques and strategies</li>
-              </ul>
+            <div
+              className="prose prose-invert max-w-none"
+              data-color-mode="dark"
+            >
+              {course.overview ? (
+                <MarkdownPreview
+                  source={course.overview}
+                  style={{
+                    backgroundColor: "transparent",
+                    color: "var(--secondary-foreground)",
+                  }}
+                />
+              ) : (
+                <p className="text-secondary-foreground leading-relaxed">
+                  No detailed overview available for this course yet.
+                </p>
+              )}
             </div>
           </div>
         </div>

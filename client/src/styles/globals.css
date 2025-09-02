@@ -79,3 +79,83 @@
     overflow: hidden;
   }
 }
+
+/* Markdown Editor Dark Theme Overrides */
+[data-color-mode="dark"] .w-md-editor {
+  background-color: var(--background) !important;
+  border-color: var(--border) !important;
+}
+
+[data-color-mode="dark"] .w-md-editor .w-md-editor-toolbar {
+  background-color: var(--card) !important;
+  border-color: var(--border) !important;
+}
+
+[data-color-mode="dark"] .w-md-editor .w-md-editor-toolbar button {
+  color: var(--muted-foreground) !important;
+}
+
+[data-color-mode="dark"] .w-md-editor .w-md-editor-toolbar button:hover {
+  color: var(--primary) !important;
+  background-color: var(--primary) / 10 !important;
+}
+
+[data-color-mode="dark"] .w-md-editor .w-md-editor-toolbar button.active {
+  color: var(--primary) !important;
+  background-color: var(--primary) / 20 !important;
+}
+
+[data-color-mode="dark"] .w-md-editor-text-input,
+[data-color-mode="dark"] .w-md-editor-text-textarea {
+  background-color: var(--background) !important;
+  color: var(--foreground) !important;
+  border-color: var(--border) !important;
+}
+
+[data-color-mode="dark"] .w-md-editor-text-input:focus,
+[data-color-mode="dark"] .w-md-editor-text-textarea:focus {
+  border-color: var(--primary) !important;
+  box-shadow: 0 0 0 2px var(--primary) / 20 !important;
+}
+
+[data-color-mode="dark"] .wmde-markdown {
+  background-color: transparent !important;
+  color: var(--secondary-foreground) !important;
+}
+
+[data-color-mode="dark"] .wmde-markdown h1,
+[data-color-mode="dark"] .wmde-markdown h2,
+[data-color-mode="dark"] .wmde-markdown h3,
+[data-color-mode="dark"] .wmde-markdown h4,
+[data-color-mode="dark"] .wmde-markdown h5,
+[data-color-mode="dark"] .wmde-markdown h6 {
+  color: var(--foreground) !important;
+}
+
+[data-color-mode="dark"] .wmde-markdown a {
+  color: var(--primary) !important;
+}
+
+[data-color-mode="dark"] .wmde-markdown code {
+  background-color: var(--card) !important;
+  color: var(--primary) !important;
+  border: 1px solid var(--border) !important;
+}
+
+[data-color-mode="dark"] .wmde-markdown pre {
+  background-color: var(--card) !important;
+  border: 1px solid var(--border) !important;
+}
+
+[data-color-mode="dark"] .wmde-markdown blockquote {
+  border-left-color: var(--primary) !important;
+  background-color: var(--card) / 50 !important;
+}
+
+.wmde-markdown ul {
+  list-style-type: disc;
+}
+
+.wmde-markdown ol {
+  list-style-type: decimal;
+}

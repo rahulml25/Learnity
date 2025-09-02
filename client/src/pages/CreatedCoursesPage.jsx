@@ -9,6 +9,7 @@ import {
   Users,
   Clock,
   Eye,
+  Edit,
 } from "lucide-react";
 
 export default function CreatedCoursesPage() {
@@ -84,10 +85,12 @@ export default function CreatedCoursesPage() {
             </p>
           </div>
 
-          <button className="bg-primary hover:bg-primary-accent text-primary-foreground inline-flex items-center space-x-2 rounded-lg px-6 py-3 font-medium transition-colors">
-            <Plus className="h-4 w-4" />
-            <span>Create New Course</span>
-          </button>
+          <Link to="/courses/create">
+            <button className="bg-primary hover:bg-primary-accent text-primary-foreground inline-flex items-center space-x-2 rounded-lg px-6 py-3 font-medium transition-colors">
+              <Plus className="h-4 w-4" />
+              <span>Create New Course</span>
+            </button>
+          </Link>
         </div>
 
         {/* Error State */}
@@ -114,10 +117,12 @@ export default function CreatedCoursesPage() {
               <p className="text-muted-foreground mb-6">
                 Start sharing your knowledge by creating your first course.
               </p>
-              <button className="bg-primary hover:bg-primary-accent text-primary-foreground inline-flex items-center rounded-lg px-6 py-3 font-medium transition-colors">
-                <Plus className="mr-2 h-4 w-4" />
-                Create Your First Course
-              </button>
+              <Link to="/courses/create">
+                <button className="bg-primary hover:bg-primary-accent text-primary-foreground inline-flex items-center rounded-lg px-6 py-3 font-medium transition-colors">
+                  <Plus className="mr-2 h-4 w-4" />
+                  Create Your First Course
+                </button>
+              </Link>
             </div>
           )
         )}
@@ -152,25 +157,33 @@ function InstructorCourseCard({ course }) {
               <Users className="text-secondary h-3 w-3" />
             </div>
             <span className="font-medium">
-              {course.enrolledStudents?.length || 0} students
+              {course.enrolledStudents.length} students
             </span>
           </div>
         </div>
 
-        <div className="flex space-x-2 pt-2">
+        <div className="grid grid-cols-1 gap-3 pt-2 sm:grid-cols-2">
           <Link
             to={`/courses/${course._id}`}
-            className="from-secondary/15 to-secondary/10 hover:from-secondary/25 hover:to-secondary/15 text-secondary border-secondary/20 hover:border-secondary/40 flex-1 rounded-lg border bg-gradient-to-r px-4 py-3 text-center font-semibold transition-all duration-300"
+            className="from-secondary/15 to-secondary/10 hover:from-secondary/25 hover:to-secondary/15 text-secondary border-secondary/20 hover:border-secondary/40 rounded-lg border bg-gradient-to-r px-4 py-3 text-center font-semibold transition-all duration-300"
           >
             View Course
           </Link>
 
           <Link
             to={`/courses/${course._id}/preview`}
-            className="from-primary/15 to-primary/10 hover:from-primary/25 hover:to-primary/15 text-primary border-primary/20 hover:border-primary/40 flex flex-1 items-center justify-center space-x-1 rounded-lg border bg-gradient-to-r px-4 py-3 text-center font-semibold transition-all duration-300"
+            className="from-primary/15 to-primary/10 hover:from-primary/25 hover:to-primary/15 text-primary border-primary/20 hover:border-primary/40 flex items-center justify-center space-x-1 rounded-lg border bg-gradient-to-r px-4 py-3 text-center font-semibold transition-all duration-300"
           >
             <Eye className="h-4 w-4" />
             <span>Preview</span>
+          </Link>
+
+          <Link
+            to={`/courses/${course._id}/edit`}
+            className="from-highlight/15 to-highlight/10 hover:from-highlight/25 hover:to-highlight/15 text-highlight border-highlight/20 hover:border-highlight/40 col-span-1 flex items-center justify-center space-x-1 rounded-lg border bg-gradient-to-r px-4 py-3 text-center font-semibold transition-all duration-300 sm:col-span-2"
+          >
+            <Edit className="h-4 w-4" />
+            <span>Edit Course</span>
           </Link>
         </div>
       </div>
