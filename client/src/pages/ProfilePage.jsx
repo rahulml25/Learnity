@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router";
 import { useAuth } from "../contexts/AuthContext";
+import { API_BASE_URL } from "../config";
 import {
   User,
   MapPin,
@@ -35,8 +36,7 @@ export default function ProfilePage() {
   const fetchProfile = async () => {
     try {
       if (isOwnProfile) {
-        // Always fetch fresh data from server to ensure we have the latest profile data
-        const response = await fetch("http://localhost:3000/auth/me", {
+        const response = await fetch(`${API_BASE_URL}/auth/me`, {
           credentials: "include",
         });
 
@@ -47,13 +47,9 @@ export default function ProfilePage() {
           setError("Failed to load profile");
         }
       } else {
-        // Fetch another user's profile from server
-        const response = await fetch(
-          `http://localhost:3000/auth/profile/${id}`,
-          {
-            credentials: "include",
-          },
-        );
+        const response = await fetch(`${API_BASE_URL}/auth/profile/${id}`, {
+          credentials: "include",
+        });
 
         if (response.ok) {
           const userData = await response.json();
@@ -75,7 +71,7 @@ export default function ProfilePage() {
     try {
       console.log("Fetching instructor courses for:", profileUser);
       const response = await fetch(
-        `http://localhost:3000/courses/instructor/${profileUser._id}`,
+        `${API_BASE_URL}/courses/instructor/${profileUser._id}`,
         {
           credentials: "include",
         },

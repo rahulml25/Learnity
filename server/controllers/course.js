@@ -77,7 +77,6 @@ export const getCoursesByInstructor = async (req, res) => {
       },
     ]);
 
-    // Step 2: populate instructor (name + email)
     courses = await Course.populate(courses, {
       path: "instructor",
       select: "name email",
@@ -133,25 +132,20 @@ export const getCourseById = async (req, res) => {
       return res.status(404).json({ message: "Course not found." });
     }
 
-    // Check if current user is enrolled
     const isEnrolled = course.enrolledStudents.includes(userId);
 
-    // Prepare course data based on user role
     const courseData = {
       ...course.toObject(),
       isEnrolled,
     };
 
-    // Only include enrolled students if user is an instructor AND it's their course
     if (role === "instructor" && course.instructor._id.toString() === userId) {
-      // Populate enrolled students with their details for instructors
       const courseWithStudents = await Course.findById(courseId)
         .populate("instructor", "name email")
         .populate("enrolledStudents", "name email");
 
       courseData.enrolledStudents = courseWithStudents.enrolledStudents;
     } else {
-      // Remove enrolled students array for non-instructors or other instructors
       courseData.enrolledStudents = undefined;
     }
 

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { Link } from "react-router";
+import { API_BASE_URL } from "../config";
 import {
   BookOpen,
   Loader2,
@@ -26,7 +27,7 @@ export default function CreatedCoursesPage() {
 
   const fetchCreatedCourses = async () => {
     try {
-      const response = await fetch("http://localhost:3000/courses/created", {
+      const response = await fetch(`${API_BASE_URL}/courses/created`, {
         credentials: "include",
       });
 
@@ -43,7 +44,6 @@ export default function CreatedCoursesPage() {
     }
   };
 
-  // Redirect if not an instructor
   if (user?.role !== "instructor") {
     return (
       <div className="bg-background flex min-h-screen items-center justify-center">

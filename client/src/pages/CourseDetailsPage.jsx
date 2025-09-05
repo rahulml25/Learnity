@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router";
 import { useAuth } from "../contexts/AuthContext";
+import { API_BASE_URL } from "../config";
 import MarkdownPreview from "@uiw/react-markdown-preview";
 import "@uiw/react-markdown-preview/markdown.css";
 import {
@@ -30,7 +31,7 @@ export default function CourseDetailsPage() {
 
   const fetchCourse = async () => {
     try {
-      const response = await fetch(`http://localhost:3000/courses/${id}`, {
+      const response = await fetch(`${API_BASE_URL}/courses/${id}`, {
         credentials: "include",
       });
 
@@ -52,18 +53,14 @@ export default function CourseDetailsPage() {
 
     setEnrolling(true);
     try {
-      const response = await fetch(
-        `http://localhost:3000/courses/${id}/enroll`,
-        {
-          method: "POST",
-          credentials: "include",
-        },
-      );
+      const response = await fetch(`${API_BASE_URL}/courses/${id}/enroll`, {
+        method: "POST",
+        credentials: "include",
+      });
 
       const data = await response.json();
       if (response.ok) {
         setEnrollmentStatus("success");
-        // Refresh course data to update enrollment status
         fetchCourse();
       } else {
         setEnrollmentStatus(`error: ${data.message}`);

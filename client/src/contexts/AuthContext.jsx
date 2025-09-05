@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import { API_BASE_URL } from "../config";
 
 const AuthContext = createContext();
 
@@ -15,13 +16,12 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Check if user is logged in on app start
     checkAuth();
   }, []);
 
   const checkAuth = async () => {
     try {
-      const response = await fetch("http://localhost:3000/auth/me", {
+      const response = await fetch(`${API_BASE_URL}/auth/me`, {
         credentials: "include",
       });
       if (response.ok) {
@@ -37,7 +37,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password, role) => {
     try {
-      const response = await fetch("http://localhost:3000/auth/login", {
+      const response = await fetch(`${API_BASE_URL}/auth/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -48,7 +48,7 @@ export const AuthProvider = ({ children }) => {
 
       const data = await response.json();
       if (response.ok) {
-        await checkAuth(); // Get user data after successful login
+        await checkAuth();
         return { success: true };
       } else {
         return { success: false, error: data.message };
@@ -60,7 +60,7 @@ export const AuthProvider = ({ children }) => {
 
   const signup = async (name, email, password, role) => {
     try {
-      const response = await fetch("http://localhost:3000/auth/signup", {
+      const response = await fetch(`${API_BASE_URL}/auth/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -71,7 +71,7 @@ export const AuthProvider = ({ children }) => {
 
       const data = await response.json();
       if (response.ok) {
-        await checkAuth(); // Get user data after successful signup
+        await checkAuth();
         return { success: true };
       } else {
         return { success: false, error: data.message };
@@ -83,7 +83,7 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     try {
-      await fetch("http://localhost:3000/auth/logout", {
+      await fetch(`${API_BASE_URL}/auth/logout`, {
         credentials: "include",
       });
       setUser(null);

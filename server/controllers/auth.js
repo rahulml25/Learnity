@@ -15,7 +15,6 @@ const validRoles = ["student", "instructor"];
 export const signup = async (req, res) => {
   const { name, email, password, role } = req.body;
 
-  // Basic validation
   if (!name || !email || !password) {
     return res
       .status(400)
@@ -25,13 +24,11 @@ export const signup = async (req, res) => {
     return res.status(400).json({ message: "Invalid Format provided." });
   }
 
-  // Check if user already exists
   const userExists = await User.findOne({ email });
   if (userExists) {
     return res.status(400).json({ message: "User already exists." });
   }
 
-  // Create new user
   const user = new User({ name, email, password, role });
   await user.save();
 
@@ -47,7 +44,6 @@ export const signup = async (req, res) => {
 export const login = async (req, res) => {
   const { email, password, role } = req.body;
 
-  // Basic validation
   if (!email || !password) {
     return res
       .status(400)
@@ -57,7 +53,6 @@ export const login = async (req, res) => {
     return res.status(400).json({ message: "Invalid Format provided." });
   }
 
-  // Find user by email
   const user = await User.findOne({ email, role });
   if (!user || !(await user.comparePassword(password))) {
     return res.status(401).json({ message: "Invalid credentials." });
@@ -122,16 +117,13 @@ export const updateProfile = async (req, res) => {
       socialLinks,
     } = req.body;
 
-    // Basic validation
     if (!name) {
       return res.status(400).json({ message: "Name is required." });
     }
 
-    // Prepare update object based on user role
     let updateData = { name };
 
     if (role === "student") {
-      // Students can update: name, goals, skills, location
       updateData = {
         ...updateData,
         goals: goals || [],
@@ -139,7 +131,6 @@ export const updateProfile = async (req, res) => {
         location: location || "",
       };
     } else if (role === "instructor") {
-      // Instructors can update: name, expertise, experience, social links
       updateData = {
         ...updateData,
         expertise: expertise || [],
@@ -148,7 +139,6 @@ export const updateProfile = async (req, res) => {
       };
     }
 
-    // Update user profile
     const updatedUser = await User.findByIdAndUpdate(userId, updateData, {
       new: true,
       runValidators: true,

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
+import { API_BASE_URL } from "../config";
 import CourseCard from "../components/CourseCard";
 import { BookOpen, Loader2, GraduationCap } from "lucide-react";
 
@@ -17,7 +18,7 @@ export default function EnrolledCoursesPage() {
 
   const fetchEnrolledCourses = async () => {
     try {
-      const response = await fetch("http://localhost:3000/courses/enrolled", {
+      const response = await fetch(`${API_BASE_URL}/courses/enrolled`, {
         credentials: "include",
       });
 
@@ -34,7 +35,6 @@ export default function EnrolledCoursesPage() {
     }
   };
 
-  // Redirect if not a student
   if (user?.role !== "student") {
     return (
       <div className="bg-background flex min-h-screen items-center justify-center">

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router";
 import { useAuth } from "../contexts/AuthContext";
+import { API_BASE_URL } from "../config";
 import MarkdownPreview from "@uiw/react-markdown-preview";
 import "@uiw/react-markdown-preview/markdown.css";
 import { ArrowLeft, Clock, Calendar, Loader2, BookOpen } from "lucide-react";
@@ -18,13 +19,9 @@ export default function CoursePreviewPage() {
 
   const fetchCourseDetails = async () => {
     try {
-      // Fetch course details
-      const courseResponse = await fetch(
-        `http://localhost:3000/courses/${id}`,
-        {
-          credentials: "include",
-        },
-      );
+      const courseResponse = await fetch(`${API_BASE_URL}/courses/${id}`, {
+        credentials: "include",
+      });
 
       if (courseResponse.ok) {
         const courseData = await courseResponse.json();
@@ -39,7 +36,6 @@ export default function CoursePreviewPage() {
     }
   };
 
-  // Check if user is an instructor
   if (user?.role !== "instructor") {
     return (
       <div className="bg-background flex min-h-screen items-center justify-center">

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router";
 import { useAuth } from "../contexts/AuthContext";
+import { API_BASE_URL } from "../config";
 import {
   User,
   MapPin,
@@ -178,7 +179,7 @@ export default function EditProfilePage() {
     setSuccess("");
 
     try {
-      const response = await fetch("http://localhost:3000/auth/profile", {
+      const response = await fetch(`${API_BASE_URL}/auth/profile`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -191,7 +192,7 @@ export default function EditProfilePage() {
 
       if (response.ok) {
         console.log(user, data.user);
-        setUser(data.user); // Update user context
+        setUser(data.user);
         setSuccess("Profile updated successfully!");
         setTimeout(() => {
           navigate(`/profile/${user._id}`);

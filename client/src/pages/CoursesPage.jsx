@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
+import { API_BASE_URL } from "../config";
 import CourseCard from "../components/CourseCard";
 import { BookOpen, Loader2 } from "lucide-react";
 
@@ -15,7 +16,7 @@ export default function CoursesPage() {
 
   const fetchCourses = async () => {
     try {
-      const response = await fetch("http://localhost:3000/courses", {
+      const response = await fetch(`${API_BASE_URL}/courses`, {
         credentials: "include",
       });
 

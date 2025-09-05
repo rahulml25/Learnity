@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router";
 import { useAuth } from "../contexts/AuthContext";
+import { API_BASE_URL } from "../config";
 import MDEditor, { commands } from "@uiw/react-md-editor";
 import "@uiw/react-md-editor/markdown-editor.css";
 import "@uiw/react-markdown-preview/markdown.css";
@@ -18,7 +19,6 @@ export default function CreateCoursePage() {
   const { user } = useAuth();
   const navigate = useNavigate();
 
-  // Redirect if not an instructor
   if (user?.role !== "instructor") {
     navigate("/courses");
     return null;
@@ -51,7 +51,7 @@ export default function CreateCoursePage() {
     setError("");
 
     try {
-      const response = await fetch("http://localhost:3000/courses", {
+      const response = await fetch(`${API_BASE_URL}/courses`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -159,7 +159,6 @@ export default function CreateCoursePage() {
                   preview="edit"
                   hideToolbar={false}
                   commands={[
-                    // Basic formatting commands excluding h1 and h2
                     commands.bold,
                     commands.italic,
                     commands.strikethrough,
