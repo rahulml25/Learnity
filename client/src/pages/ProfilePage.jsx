@@ -9,10 +9,8 @@ import {
   Briefcase,
   ExternalLink,
   Edit,
-  BookOpen,
   Loader2,
 } from "lucide-react";
-import CourseCard from "../components/CourseCard";
 
 export default function ProfilePage() {
   const { id } = useParams();
@@ -37,7 +35,17 @@ export default function ProfilePage() {
   const fetchProfile = async () => {
     try {
       if (isOwnProfile) {
-        setProfileUser(currentUser);
+        // Always fetch fresh data from server to ensure we have the latest profile data
+        const response = await fetch("http://localhost:3000/auth/me", {
+          credentials: "include",
+        });
+
+        if (response.ok) {
+          const userData = await response.json();
+          setProfileUser(userData);
+        } else {
+          setError("Failed to load profile");
+        }
       } else {
         // Fetch another user's profile from server
         const response = await fetch(
@@ -116,7 +124,6 @@ export default function ProfilePage() {
     <div className="bg-background min-h-screen">
       <div className="container mx-auto px-4 py-8">
         <div className="mx-auto max-w-4xl">
-          {/* Profile Header */}
           <div className="border-primary/20 from-card via-card to-primary/5 shadow-primary/10 mb-8 rounded-xl border bg-gradient-to-br p-8 shadow-xl">
             <div className="flex flex-col gap-6 sm:flex-row sm:items-start sm:justify-between">
               <div className="flex items-center space-x-4">
@@ -141,7 +148,7 @@ export default function ProfilePage() {
 
               {isOwnProfile && (
                 <Link
-                  to={`/profile/${id}/edit`}
+                  to="/profile/edit"
                   className="bg-secondary hover:bg-secondary-accent text-secondary-foreground flex items-center space-x-2 rounded-lg px-4 py-2 transition-colors"
                 >
                   <Edit className="h-4 w-4" />
@@ -151,9 +158,7 @@ export default function ProfilePage() {
             </div>
           </div>
 
-          {/* Profile Content */}
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
-            {/* Left Column - Profile Details */}
             <div className="space-y-8 lg:col-span-2">
               {profileUser.role === "student" ? (
                 <StudentProfileContent user={profileUser} />
@@ -162,7 +167,6 @@ export default function ProfilePage() {
               )}
             </div>
 
-            {/* Right Column - Additional Info */}
             <div className="space-y-6">
               {profileUser.role === "instructor" && (
                 <div className="border-primary/20 from-card via-card to-secondary/10 shadow-secondary/10 rounded-xl border bg-gradient-to-br p-6 shadow-lg">
@@ -212,15 +216,14 @@ export default function ProfilePage() {
 function StudentProfileContent({ user }) {
   return (
     <>
-      {/* Learning Goals */}
-      {user.goals && user.goals.length > 0 && (
-        <div className="bg-card border-border rounded-lg border p-6 shadow-sm">
-          <div className="mb-4 flex items-center space-x-2">
-            <Target className="text-primary h-5 w-5" />
-            <h2 className="text-foreground text-xl font-semibold">
-              Learning Goals
-            </h2>
-          </div>
+      <div className="bg-card border-border rounded-lg border p-6 shadow-sm">
+        <div className="mb-4 flex items-center space-x-2">
+          <Target className="text-primary h-5 w-5" />
+          <h2 className="text-foreground text-xl font-semibold">
+            Learning Goals
+          </h2>
+        </div>
+        {user.goals && user.goals.length > 0 ? (
           <div className="flex flex-wrap gap-2">
             {user.goals.map((goal, index) => (
               <span
@@ -231,16 +234,20 @@ function StudentProfileContent({ user }) {
               </span>
             ))}
           </div>
-        </div>
-      )}
+        ) : (
+          <p className="text-muted-foreground">
+            No learning goals set yet. Add some goals to track your learning
+            journey!
+          </p>
+        )}
+      </div>
 
-      {/* Skills */}
-      {user.skills && user.skills.length > 0 && (
-        <div className="bg-card border-border rounded-lg border p-6 shadow-sm">
-          <div className="mb-4 flex items-center space-x-2">
-            <Award className="text-secondary h-5 w-5" />
-            <h2 className="text-foreground text-xl font-semibold">Skills</h2>
-          </div>
+      <div className="bg-card border-border rounded-lg border p-6 shadow-sm">
+        <div className="mb-4 flex items-center space-x-2">
+          <Award className="text-secondary h-5 w-5" />
+          <h2 className="text-foreground text-xl font-semibold">Skills</h2>
+        </div>
+        {user.skills && user.skills.length > 0 ? (
           <div className="flex flex-wrap gap-2">
             {user.skills.map((skill, index) => (
               <span
@@ -251,8 +258,12 @@ function StudentProfileContent({ user }) {
               </span>
             ))}
           </div>
-        </div>
-      )}
+        ) : (
+          <p className="text-muted-foreground">
+            No skills listed yet. Add your current skills and expertise!
+          </p>
+        )}
+      </div>
     </>
   );
 }
@@ -260,7 +271,6 @@ function StudentProfileContent({ user }) {
 function InstructorProfileContent({ user }) {
   return (
     <>
-      {/* Expertise */}
       {user.expertise && user.expertise.length > 0 && (
         <div className="bg-card border-border rounded-lg border p-6">
           <div className="mb-4 flex items-center space-x-2">
@@ -282,7 +292,6 @@ function InstructorProfileContent({ user }) {
         </div>
       )}
 
-      {/* Experience */}
       {user.experience && user.experience.length > 0 && (
         <div className="bg-card border-border rounded-lg border p-6">
           <div className="mb-4 flex items-center space-x-2">
@@ -305,7 +314,6 @@ function InstructorProfileContent({ user }) {
         </div>
       )}
 
-      {/* Social Links */}
       {user.socialLinks &&
         Object.values(user.socialLinks).some((link) => link) && (
           <div className="bg-card border-border rounded-lg border p-6">

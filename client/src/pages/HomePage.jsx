@@ -4,7 +4,6 @@ import { Link } from "react-router";
 export default function HomePage() {
   return (
     <div className="home-radial-bg min-h-dvh">
-      {/* Navbar */}
       <header className="container mx-auto flex items-center justify-between px-6 py-4">
         <div className="flex items-center space-x-2">
           <img src="/icon.png" alt="Learnity Logo" className="size-10" />
@@ -28,7 +27,6 @@ export default function HomePage() {
       </header>
 
       <main className="container mx-auto">
-        {/* Hero Section */}
         <section className="hero flex flex-col items-center gap-y-10 px-10 py-14 md:flex-row md:px-14 lg:px-20">
           <div className="md:min-w-3/5 xl:w-4/6">
             <div className="mb-8 space-y-4 lg:space-y-8">

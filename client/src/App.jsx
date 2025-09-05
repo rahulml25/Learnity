@@ -15,6 +15,7 @@ import CreatedCoursesPage from "./pages/CreatedCoursesPage";
 import CoursePreviewPage from "./pages/CoursePreviewPage";
 import CreateCoursePage from "./pages/CreateCoursePage";
 import EditCoursePage from "./pages/EditCoursePage";
+import EditProfilePage from "./pages/EditProfilePage";
 
 export default function App() {
   return (
@@ -58,6 +59,14 @@ export default function App() {
                 element={
                   <ProtectedRoute>
                     <ProfilePage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/profile/edit"
+                element={
+                  <ProtectedRoute>
+                    <EditProfilePage />
                   </ProtectedRoute>
                 }
               />

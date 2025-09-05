@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 import Course from "../models/Course.js";
-import User from "../models/User.js";
 
 /** @type {import('express').RequestHandler} */
 export const getCourses = async (req, res) => {
@@ -119,7 +118,7 @@ export const getCoursesByStudent = async (req, res) => {
 export const getCourseById = async (req, res) => {
   try {
     const { id: courseId } = req.params;
-    const { id: userId } = req.user;
+    const { id: userId, role } = req.user;
 
     if (!courseId) {
       return res.status(400).json({ message: "Course ID is required." });
@@ -137,12 +136,24 @@ export const getCourseById = async (req, res) => {
     // Check if current user is enrolled
     const isEnrolled = course.enrolledStudents.includes(userId);
 
-    // Return course data without enrolled students list, but include enrollment status
+    // Prepare course data based on user role
     const courseData = {
       ...course.toObject(),
       isEnrolled,
-      enrolledStudents: undefined, // Remove the array but keep the enrollment status
     };
+
+    // Only include enrolled students if user is an instructor AND it's their course
+    if (role === "instructor" && course.instructor._id.toString() === userId) {
+      // Populate enrolled students with their details for instructors
+      const courseWithStudents = await Course.findById(courseId)
+        .populate("instructor", "name email")
+        .populate("enrolledStudents", "name email");
+
+      courseData.enrolledStudents = courseWithStudents.enrolledStudents;
+    } else {
+      // Remove enrolled students array for non-instructors or other instructors
+      courseData.enrolledStudents = undefined;
+    }
 
     res.status(200).json(courseData);
   } catch (error) {

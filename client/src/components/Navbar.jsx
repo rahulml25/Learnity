@@ -37,13 +37,11 @@ export default function Navbar() {
     <nav className="bg-card border-border sticky top-0 z-50 border-b">
       <div className="container mx-auto px-4">
         <div className="flex h-16 items-center justify-between">
-          {/* Logo */}
           <Link to="/courses" className="flex items-center space-x-2">
             <img src="/icon.png" alt="Learnity Logo" className="h-8 w-8" />
             <span className="text-foreground text-xl font-bold">Learnity</span>
           </Link>
 
-          {/* Desktop Navigation */}
           <div className="hidden items-center space-x-8 md:flex">
             {navLinks.map((link) => (
               <Link
@@ -65,7 +63,6 @@ export default function Navbar() {
             </button>
           </div>
 
-          {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
             className="text-foreground md:hidden"
@@ -78,7 +75,6 @@ export default function Navbar() {
           </button>
         </div>
 
-        {/* Mobile Navigation */}
         {isMobileMenuOpen && (
           <div className="border-border border-t py-4 md:hidden">
             <div className="flex flex-col space-y-4">

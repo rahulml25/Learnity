@@ -74,7 +74,6 @@ export default function CreatedCoursesPage() {
   return (
     <div className="bg-background min-h-screen">
       <div className="container mx-auto px-4 py-8">
-        {/* Header */}
         <div className="mb-12 flex flex-col sm:flex-row sm:items-center sm:justify-between">
           <div className="mb-6 text-center sm:mb-0 sm:text-left">
             <h1 className="text-foreground mb-4 text-4xl font-bold">
@@ -93,14 +92,12 @@ export default function CreatedCoursesPage() {
           </Link>
         </div>
 
-        {/* Error State */}
         {error && (
           <div className="bg-error/10 border-error/20 text-error mb-8 rounded-lg border px-6 py-4 text-center">
             {error}
           </div>
         )}
 
-        {/* Courses Grid */}
         {courses.length > 0 ? (
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
             {courses.map((course) => (

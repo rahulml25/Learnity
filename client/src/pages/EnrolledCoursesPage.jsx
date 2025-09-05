@@ -65,7 +65,6 @@ export default function EnrolledCoursesPage() {
   return (
     <div className="bg-background min-h-screen">
       <div className="container mx-auto px-4 py-8">
-        {/* Header */}
         <div className="mb-12 text-center">
           <div className="mb-4 flex items-center justify-center">
             <GraduationCap className="text-primary h-12 w-12" />
@@ -78,14 +77,12 @@ export default function EnrolledCoursesPage() {
           </p>
         </div>
 
-        {/* Error State */}
         {error && (
           <div className="bg-error/10 border-error/20 text-error mb-8 rounded-lg border px-6 py-4 text-center">
             {error}
           </div>
         )}
 
-        {/* Courses Grid */}
         {courses.length > 0 ? (
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
             {courses.map((course) => (

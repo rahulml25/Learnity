@@ -11,6 +11,8 @@ import {
   Loader2,
   BookOpen,
   UserPlus,
+  Users,
+  Mail,
 } from "lucide-react";
 
 export default function CourseDetailsPage() {
@@ -109,7 +111,6 @@ export default function CourseDetailsPage() {
   return (
     <div className="bg-background min-h-screen">
       <div className="container mx-auto px-4 py-8">
-        {/* Back Button */}
         <Link
           to="/courses"
           className="text-muted-foreground hover:text-foreground mb-6 inline-flex items-center transition-colors"
@@ -119,7 +120,6 @@ export default function CourseDetailsPage() {
         </Link>
 
         <div className="mx-auto max-w-4xl">
-          {/* Course Header */}
           <div className="bg-card border-border mb-8 rounded-lg border p-8 shadow-sm">
             <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
               <div className="flex-1">
@@ -161,10 +161,8 @@ export default function CourseDetailsPage() {
                 </p>
               </div>
 
-              {/* Enrollment Section */}
               {user?.role === "student" && (
                 <div className="lg:w-80 lg:border-l lg:border-dashed lg:pl-6">
-                  {/* <div className="border-border from-card/50 to-muted/20 rounded-lg border bg-gradient-to-br p-6 backdrop-blur-sm"> */}
                   <h3 className="text-foreground mb-4 text-xl font-semibold">
                     Enrollment Status
                   </h3>
@@ -287,13 +285,11 @@ export default function CourseDetailsPage() {
                       </button>
                     </>
                   )}
-                  {/* </div> */}
                 </div>
               )}
             </div>
           </div>
 
-          {/* Course Content/Details */}
           <div className="bg-card border-border rounded-lg border p-8 shadow-sm">
             <h2 className="text-foreground mb-6 text-2xl font-bold">
               Course Overview
@@ -318,6 +314,62 @@ export default function CourseDetailsPage() {
               )}
             </div>
           </div>
+
+          {user?.role === "instructor" &&
+            course.instructor?._id === user._id &&
+            course.enrolledStudents && (
+              <div className="bg-card border-border mt-4 rounded-lg border p-8 shadow-sm">
+                <div className="mb-6 flex items-center space-x-3">
+                  <Users className="text-primary h-6 w-6" />
+                  <h2 className="text-foreground text-2xl font-bold">
+                    Enrolled Students
+                  </h2>
+                  <span className="bg-primary/10 text-primary border-primary/20 rounded-full border px-3 py-1 text-sm font-medium">
+                    {course.enrolledStudents.length} student
+                    {course.enrolledStudents.length !== 1 ? "s" : ""}
+                  </span>
+                </div>
+
+                {course.enrolledStudents.length > 0 ? (
+                  <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                    {course.enrolledStudents.map((student) => (
+                      <div
+                        key={student._id}
+                        className="bg-background border-border hover:border-primary/40 flex items-center space-x-4 rounded-lg border p-4 transition-colors"
+                      >
+                        <div className="bg-primary/10 flex h-12 w-12 shrink-0 items-center justify-center rounded-full">
+                          <User className="text-primary h-6 w-6" />
+                        </div>
+                        <div className="flex-1">
+                          <Link
+                            to={`/profile/${student._id}`}
+                            className="hover:underline"
+                          >
+                            <h3 className="text-foreground font-semibold">
+                              {student.name}
+                            </h3>
+                          </Link>
+                          <div className="text-muted-foreground flex items-center space-x-1 text-sm">
+                            <Mail className="h-3 w-3" />
+                            <span>{student.email}</span>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="py-12 text-center">
+                    <Users className="text-muted-foreground mx-auto mb-4 h-16 w-16" />
+                    <h3 className="text-foreground mb-2 text-xl font-semibold">
+                      No students enrolled yet
+                    </h3>
+                    <p className="text-muted-foreground">
+                      Students who enroll in this course will appear here.
+                    </p>
+                  </div>
+                )}
+              </div>
+            )}
         </div>
       </div>
     </div>

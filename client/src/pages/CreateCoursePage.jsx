@@ -81,7 +81,6 @@ export default function CreateCoursePage() {
   return (
     <div className="bg-background min-h-screen">
       <div className="container mx-auto px-4 py-8">
-        {/* Header */}
         <div className="mb-8">
           <div className="mb-6 flex items-center space-x-4">
             <button
@@ -108,17 +107,14 @@ export default function CreateCoursePage() {
           </div>
         </div>
 
-        {/* Error State */}
         {error && (
           <div className="bg-error/10 border-error/20 text-error mb-6 rounded-lg border px-6 py-4">
             {error}
           </div>
         )}
 
-        {/* Form */}
         <div className="bg-card border-border mx-auto max-w-4xl rounded-xl border p-8">
           <form onSubmit={handleSubmit} className="space-y-6">
-            {/* Course Title */}
             <div>
               <label className="text-foreground mb-2 block text-sm font-medium">
                 Course Title *
@@ -134,7 +130,6 @@ export default function CreateCoursePage() {
               />
             </div>
 
-            {/* Course Description */}
             <div>
               <label className="text-foreground mb-2 block text-sm font-medium">
                 Course Description *
@@ -150,7 +145,6 @@ export default function CreateCoursePage() {
               />
             </div>
 
-            {/* Course Overview - Rich Text */}
             <div>
               <label className="text-foreground mb-2 block text-sm font-medium">
                 Course Overview
@@ -207,7 +201,6 @@ export default function CreateCoursePage() {
               </div>
             </div>
 
-            {/* Duration */}
             <div>
               <label className="text-foreground mb-2 block text-sm font-medium">
                 Duration (hours) *
@@ -225,7 +218,6 @@ export default function CreateCoursePage() {
               />
             </div>
 
-            {/* Submit Button */}
             <div className="flex justify-end space-x-4 pt-6">
               <button
                 type="button"

@@ -107,3 +107,62 @@ export const getUserProfile = async (req, res) => {
     res.status(500).json({ message: "Internal server error." });
   }
 };
+
+/** @type {import("express").RequestHandler} */
+export const updateProfile = async (req, res) => {
+  try {
+    const { id: userId, role } = req.user;
+    const {
+      name,
+      goals,
+      skills,
+      location,
+      expertise,
+      experience,
+      socialLinks,
+    } = req.body;
+
+    // Basic validation
+    if (!name) {
+      return res.status(400).json({ message: "Name is required." });
+    }
+
+    // Prepare update object based on user role
+    let updateData = { name };
+
+    if (role === "student") {
+      // Students can update: name, goals, skills, location
+      updateData = {
+        ...updateData,
+        goals: goals || [],
+        skills: skills || [],
+        location: location || "",
+      };
+    } else if (role === "instructor") {
+      // Instructors can update: name, expertise, experience, social links
+      updateData = {
+        ...updateData,
+        expertise: expertise || [],
+        experience: experience || [],
+        socialLinks: socialLinks || {},
+      };
+    }
+
+    // Update user profile
+    const updatedUser = await User.findByIdAndUpdate(userId, updateData, {
+      new: true,
+      runValidators: true,
+    }).select("-password");
+
+    if (!updatedUser) {
+      return res.status(404).json({ message: "User not found." });
+    }
+
+    res.status(200).json({
+      message: "Profile updated successfully.",
+      user: updatedUser,
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Internal server error." });
+  }
+};

@@ -29,33 +29,26 @@
 }
 
 :root {
-  /* Cool dark theme with vibrant, attractive colors */
   --background: #0a0e1a;
   --foreground: #f1f5f9;
 
-  /* Vibrant cyan-blue primary colors - much more attractive */
   --primary: hsl(194, 95%, 58%);
   --primary-accent: hsl(194, 95%, 52%);
 
-  /* Cool purple secondary colors - perfect complement */
   --secondary: hsl(280, 85%, 68%);
   --secondary-accent: hsl(280, 85%, 62%);
 
-  /* Attractive card colors - cool dark blue with subtle warmth */
   --card: #1a2332;
   --border: hsl(194, 45%, 35%);
   --ring: hsl(194, 95%, 58%);
 
-  /* Crisp text contrast for readability */
   --primary-foreground: #ffffff;
   --secondary-foreground: #e2e8f0;
   --muted-foreground: #94a3b8;
 
-  /* Eye-catching accent colors */
   --highlight: hsl(166, 90%, 55%);
   --highlight-foreground: hsl(320, 85%, 65%);
 
-  /* Vibrant status colors */
   --success: hsl(142, 85%, 55%);
   --warning: hsl(38, 92%, 58%);
   --error: #ef4444;

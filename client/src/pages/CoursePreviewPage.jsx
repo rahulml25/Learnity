@@ -90,7 +90,6 @@ export default function CoursePreviewPage() {
   return (
     <div className="bg-background min-h-screen">
       <div className="container mx-auto px-4 py-8">
-        {/* Back Button */}
         <Link
           to="/created"
           className="text-muted-foreground hover:text-foreground mb-6 inline-flex items-center transition-colors"
@@ -100,7 +99,6 @@ export default function CoursePreviewPage() {
         </Link>
 
         <div className="mx-auto max-w-6xl">
-          {/* Course Header */}
           <div className="bg-card border-border mb-8 rounded-lg border p-8 shadow-sm">
             <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
               <div className="flex-1">
@@ -127,7 +125,6 @@ export default function CoursePreviewPage() {
                 </p>
               </div>
 
-              {/* Quick Actions */}
               <div className="lg:w-80">
                 <div className="bg-card border-border rounded-lg border p-6">
                   <h3 className="text-foreground mb-4 text-xl font-semibold">
@@ -154,7 +151,6 @@ export default function CoursePreviewPage() {
             </div>
           </div>
 
-          {/* Course Overview */}
           <div className="bg-card border-border rounded-lg border p-8 shadow-sm">
             <h2 className="text-foreground mb-6 text-2xl font-bold">
               Course Overview
